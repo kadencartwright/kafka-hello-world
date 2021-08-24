@@ -1,0 +1,27 @@
+services:
+  k-consumer:
+    container_name: k-consumer
+    build:
+      context: ./consumer
+      dockerfile: consumer.Dockerfile
+    networks:
+      - event-net
+    command: sh -c "exec nodemon /usr/src/app/index.js"
+    volumes:
+      - ./consumer:/usr/src/app/
+  k-producer:
+    depends_on:
+      - kafka
+    container_name: k-producer
+    build:
+      context: ./producer
+      dockerfile: producer.Dockerfile
+    networks:
+      - event-net
+    command: sh -c "exec nodemon /usr/src/app/index.js"
+    volumes:
+      - ./producer:/usr/src/app/
+
+networks:
+  event-net:
+    external: true

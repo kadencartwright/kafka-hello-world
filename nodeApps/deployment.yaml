@@ -1,0 +1,20 @@
+type:apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-test-deployment
+spec:
+  selector:
+    matchLabels:
+      app: kafka-test-deployment
+  template:
+    metadata:
+      labels:
+        app: kafka-test-deployment
+    spec:
+      containers:
+      - name: consumer
+        image: localhost:5555/k-consumer
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
